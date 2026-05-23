@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BarcodeScanner } from './BarcodeScanner';
 import { ScanResultCard } from './ScanResultCard';
 import { inferScanAction, canPerformAction, type ScanAction } from '@/lib/tracking/scan-handler';
@@ -21,7 +21,8 @@ interface Props {
 export function ScanFlow({ room, onChangeRoom }: Props) {
   const { user } = useAuth();
   const [scannedCode, setScannedCode] = useState<string | null>(null);
-  const [selectedAction, setSelectedAction] = useState<ScanAction | null>(null);
+  // actionOverride is keyed by roomId — stale overrides for other rooms are ignored
+  const [actionOverride, setActionOverride] = useState<{ roomId: string; action: ScanAction } | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const today = todayDateVN();
   const visit = useVisit(scannedCode ? today : null, scannedCode);
@@ -36,21 +37,23 @@ export function ScanFlow({ room, onChangeRoom }: Props) {
       })
     : null;
 
-  useEffect(() => {
-    if (inference && selectedAction === null) {
-      setSelectedAction(inference.suggested);
-    }
-  }, [inference, selectedAction]);
+  // Use the override only if it's for the current room; otherwise fall back to inference
+  const selectedAction: ScanAction | null =
+    actionOverride?.roomId === room.id ? actionOverride.action : (inference?.suggested ?? null);
 
   function handleScan(code: string) {
-    if (scannedCode) return; // already scanned, ignore until cleared
+    if (scannedCode) return;
     setScannedCode(code.trim());
-    setSelectedAction(null);
+    setActionOverride(null);
+  }
+
+  function handleSelectAction(action: ScanAction) {
+    setActionOverride({ roomId: room.id, action });
   }
 
   function reset() {
     setScannedCode(null);
-    setSelectedAction(null);
+    setActionOverride(null);
   }
 
   async function handleSubmit() {
@@ -125,7 +128,7 @@ export function ScanFlow({ room, onChangeRoom }: Props) {
           code={scannedCode}
           inference={inference}
           selected={selectedAction}
-          onSelect={setSelectedAction}
+          onSelect={handleSelectAction}
           onSubmit={handleSubmit}
           onCancel={reset}
           submitting={submitting}

@@ -18,6 +18,15 @@ export function BarcodeScanner({ onScan, paused }: BarcodeScannerProps) {
   const [started, setStarted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Auto-start if camera permission was already granted in a previous session
+  useEffect(() => {
+    if (!navigator.permissions) return;
+    navigator.permissions
+      .query({ name: 'camera' as PermissionName })
+      .then((result) => { if (result.state === 'granted') setStarted(true); })
+      .catch(() => {});
+  }, []);
+
   useEffect(() => {
     // If scanning hasn't been started by the user yet, or if it is paused, stop scanning.
     if (!started) {
