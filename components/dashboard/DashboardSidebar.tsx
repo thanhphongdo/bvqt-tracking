@@ -10,6 +10,7 @@ import {
   Building2,
   BarChart3,
   AlertTriangle,
+  Home,
   LogOut,
   ScrollText,
 } from 'lucide-react';
@@ -25,6 +26,7 @@ interface NavItem {
 }
 
 const items: NavItem[] = [
+  { href: '/', label: 'Trang chủ', icon: Home },
   { href: '/dashboard', label: 'Tổng quan', icon: LayoutDashboard },
   { href: '/dashboard/visits', label: 'Bệnh nhân', icon: BarChart3 },
   { href: '/dashboard/analytics', label: 'Thống kê', icon: BarChart3 },

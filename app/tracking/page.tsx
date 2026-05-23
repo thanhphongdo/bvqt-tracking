@@ -11,9 +11,11 @@ import { RoomPicker } from '@/components/tracking/RoomPicker';
 import { ScanFlow } from '@/components/tracking/ScanFlow';
 import { StaffHistoryTab } from '@/components/tracking/StaffHistoryTab';
 import { WarningsTab } from '@/components/tracking/WarningsTab';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { LogOut, RefreshCw } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
+import { Home, LogOut, RefreshCw } from 'lucide-react';
 import type { RoomDocWithId } from '@/types/room';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
@@ -62,6 +64,13 @@ export default function TrackingPage() {
         <div className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border/40">
           <header className="flex items-center justify-between border-b border-border/40 bg-muted/40 px-4 py-2">
             <div className="flex items-center gap-2">
+              <Link
+                href="/"
+                className={buttonVariants({ variant: 'ghost', size: 'sm' })}
+                aria-label="Về trang chủ"
+              >
+                <Home className="size-4" />
+              </Link>
               <h1 className="text-sm font-semibold tracking-tight text-primary dark:text-foreground">Tracking</h1>
               {room ? (
                 <button
