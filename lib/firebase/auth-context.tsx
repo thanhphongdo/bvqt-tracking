@@ -49,6 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const { auth } = getFirebaseClient();
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
+      setLoading(true);
       setUser(fbUser);
       if (fbUser) {
         await verifyWithServer(fbUser);
