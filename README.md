@@ -35,9 +35,15 @@ See full design in [docs/superpowers/specs/2026-05-23-bvqt-tracking-design.md](d
 
    ```bash
    pnpm dlx firebase-tools login
-   # Replace REPLACE_WITH_YOUR_FIREBASE_PROJECT_ID in .firebaserc with your projectId
+   # .firebaserc already has projectId
    pnpm dlx firebase-tools deploy --only firestore:rules,firestore:indexes
    ```
+
+8. **Enable Firestore TTL policies** (auto-delete data after 67 days). Firebase Console → Firestore Database → tab **TTL** → Create policy:
+   - Collection: `visits` · Field: `expiresAt`
+   - Collection group: `events` · Field: `expiresAt`
+
+   Each visit/event doc has `expiresAt = registeredAt + 67 days` set automatically by `writeScan`. Firestore deletes them within 24h after expiry — free on Spark plan. Dashboard shows a banner 7 days before deletion so a manager can download CSV backup.
 
 ### Run
 
@@ -88,10 +94,10 @@ pnpm test:watch     # watch mode
 
 ## Roadmap
 
-- **Plan 1 (this branch):** Foundation + Auth + Users/Rooms CRUD ✅
-- **Plan 2:** Tracking page — barcode scan, visit creation, IN/OUT events, auto-inference, staff history + edit window
-- **Plan 3:** Dashboard analytics (KPIs, charts, heatmaps, Sankey), visits list & detail, warnings, CSV export
-- **Plan 4:** PWA, Firestore TTL setup, audit log UI, duty rosters, polish
+- **Plan 1:** Foundation + Auth + Users/Rooms CRUD ✅
+- **Plan 2:** Tracking page — barcode scan, visit creation, IN/OUT events, auto-inference, staff history + edit window ✅
+- **Plan 3:** Dashboard analytics (KPIs, charts, heatmaps), visits list & detail, warnings, CSV export ✅
+- **Plan 4:** PWA, Firestore TTL setup, audit log UI, duty rosters ✅
 
 See [docs/superpowers/plans/](docs/superpowers/plans/).
 

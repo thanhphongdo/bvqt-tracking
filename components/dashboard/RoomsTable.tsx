@@ -13,6 +13,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { RoomDialog } from './RoomDialog';
+import { DutyRosterDialog } from './DutyRosterDialog';
 import { toast } from 'sonner';
 import type { RoomDocWithId } from '@/types/room';
 
@@ -52,6 +53,10 @@ export function RoomsTable({ rooms }: { rooms: RoomDocWithId[] }) {
             </TableCell>
             <TableCell className="space-x-2 text-right">
               <RoomDialog room={r} trigger={<Button variant="outline" size="sm">Sửa</Button>} />
+              <DutyRosterDialog
+                room={r}
+                trigger={<Button variant="outline" size="sm">Trực</Button>}
+              />
               <Button variant="ghost" size="sm" onClick={() => toggleStatus(r)}>
                 {r.status === 'active' ? 'Vô hiệu hóa' : 'Kích hoạt'}
               </Button>

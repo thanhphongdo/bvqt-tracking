@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/firebase/auth-context";
@@ -16,7 +16,21 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "BVQT Tracking",
-  description: "Theo dõi luồng khám bệnh",
+  description: "Theo dõi luồng khám bệnh — bệnh viện Nguyễn Thị Thập",
+  applicationName: "BVQT Tracking",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "BVQT",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

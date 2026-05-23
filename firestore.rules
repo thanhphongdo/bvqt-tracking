@@ -8,7 +8,7 @@ service cloud.firestore {
     function isStaffPlus()   { return isSignedIn() && role() in ['admin', 'manager', 'staff']; }
 
     match /users/{docId} {
-      allow read: if isAdmin() || (isSignedIn() && resource.data.uid == request.auth.uid);
+      allow read: if isManagerPlus() || (isSignedIn() && resource.data.uid == request.auth.uid);
       allow write: if isAdmin();
     }
 
