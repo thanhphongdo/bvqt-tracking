@@ -43,7 +43,7 @@ export function RoomDurationPie({ data }: { data: RoomDurationStats[] }) {
             cy="50%"
             outerRadius={100}
             label={({ payload }: { payload?: RoomDurationStats }) =>
-              payload ? `${payload.roomName} (${Math.round(payload.totalMinutes)}p)` : ''
+              payload ? `${payload.roomName} (${Math.round(payload.totalMinutes)} phút)` : ''
             }
           >
             {data.map((_, i) => (
@@ -55,7 +55,7 @@ export function RoomDurationPie({ data }: { data: RoomDurationStats[] }) {
               const v = Number(value ?? 0);
               const p = item.payload as RoomDurationStats;
               return [
-                `${Math.round(v)} phút tổng (${p.visitCount} lượt, TB ${Math.round(p.avgMinutes)}p)`,
+                `${Math.round(v)} phút tổng (${p.visitCount} lượt, Trung bình ${Math.round(p.avgMinutes)} phút)`,
                 p.roomName,
               ];
             }}
@@ -77,7 +77,7 @@ export function RoomDurationBar({ data }: { data: RoomDurationStats[] }) {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
           <YAxis type="category" dataKey="roomName" width={120} />
-          <Tooltip formatter={(value) => `${Math.round(Number(value ?? 0))} phút TB`} />
+          <Tooltip formatter={(value) => `${Math.round(Number(value ?? 0))} phút trung bình`} />
           <Bar dataKey="avgMinutes" fill="#2563eb" />
         </BarChart>
       </ResponsiveContainer>

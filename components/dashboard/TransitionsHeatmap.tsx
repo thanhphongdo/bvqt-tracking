@@ -52,9 +52,9 @@ export function TransitionsHeatmap({ data }: Props) {
                     key={to}
                     className="border p-1"
                     style={{ backgroundColor: bg }}
-                    title={cell ? `${Math.round(cell.avgWaitMinutes)}p TB (${cell.count} lần)` : ''}
+                    title={cell ? `${Math.round(cell.avgWaitMinutes)} phút trung bình (${cell.count} lần)` : ''}
                   >
-                    {cell ? `${Math.round(cell.avgWaitMinutes)}p` : '—'}
+                    {cell ? `${Math.round(cell.avgWaitMinutes)} phút` : '—'}
                   </td>
                 );
               })}

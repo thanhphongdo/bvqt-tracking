@@ -74,8 +74,8 @@ export default function OverviewPage() {
         <KpiCard title="Bệnh nhân hôm nay" value={String(visits.length)} />
         <KpiCard title="Đang trong viện" value={String(inHouse.length)} />
         <KpiCard
-          title="TB tổng TG/lượt"
-          value={`${Math.round(avgMinutesPerVisit(visits))}p`}
+          title="Thời gian khám trung bình mỗi lượt"
+          value={`${Math.round(avgMinutesPerVisit(visits))} phút`}
         />
         <KpiCard
           title="Cảnh báo"

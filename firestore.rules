@@ -39,6 +39,11 @@ service cloud.firestore {
       }
     }
 
+    // Support collectionGroup query for events in analytics page
+    match /{path=**}/events/{eventId} {
+      allow read: if isStaffPlus();
+    }
+
     match /auditLog/{id} {
       allow read: if isAdmin();
       allow write: if false; // server-only via Admin SDK

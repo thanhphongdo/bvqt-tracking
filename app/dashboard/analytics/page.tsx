@@ -34,17 +34,18 @@ export default function AnalyticsPage() {
   const defaults = defaultDateRange();
   const [state, setState] = useUrlState({ from: defaults.from, to: defaults.to });
 
-  const { visits, loading: visitsLoading } = useVisitsQuery({
+  const { visits, loading: visitsLoading, error: visitsError } = useVisitsQuery({
     from: state.from,
     to: state.to,
     limit: 5000,
   });
-  const { events, loading: eventsLoading } = useEventsQuery({
+  const { events, loading: eventsLoading, error: eventsError } = useEventsQuery({
     from: state.from,
     to: state.to,
   });
 
   const loading = visitsLoading || eventsLoading;
+  const error = visitsError || eventsError;
   const roomDurations = computeRoomDurations(events);
   const transitions = computeTransitions(events);
   const hourly = computeHourlyCounts(visits);
@@ -64,6 +65,12 @@ export default function AnalyticsPage() {
         <p className="text-xs text-muted-foreground">Tối đa khuyến nghị: 60 ngày</p>
       </div>
 
+      {error && (
+        <Card className="border-destructive bg-destructive/10 p-4 text-sm text-destructive font-medium">
+          Lỗi tải dữ liệu thống kê: {error}
+        </Card>
+      )}
+
       {loading ? (
         <p className="text-sm text-muted-foreground">Đang tải...</p>
       ) : (
@@ -75,13 +82,13 @@ export default function AnalyticsPage() {
               subtitle={`${visits.filter((v) => v.hasError).length} có lỗi`}
             />
             <KpiCard
-              title="TB tổng TG/lượt"
-              value={`${Math.round(avg(visitDurations))}p`}
+              title="Trung bình tổng thời gian mỗi lượt"
+              value={`${Math.round(avg(visitDurations))} phút`}
               subtitle={visitDurations.length === 0 ? 'n/a' : `${visitDurations.length} lượt`}
             />
             <KpiCard
-              title="TB chờ đăng ký → phòng đầu"
-              value={`${Math.round(avg(regToFirst))}p`}
+              title="Trung bình thời gian chờ từ đăng ký đến phòng đầu tiên"
+              value={`${Math.round(avg(regToFirst))} phút`}
               subtitle={`${regToFirst.length} lượt`}
             />
             <KpiCard
@@ -105,7 +112,7 @@ export default function AnalyticsPage() {
           </Card>
 
           <Card className="p-4">
-            <h2 className="mb-2 text-sm font-semibold">TB thời gian chờ giữa các phòng</h2>
+            <h2 className="mb-2 text-sm font-semibold">Thời gian chờ trung bình giữa các phòng</h2>
             <TransitionsHeatmap data={transitions} />
           </Card>
         </>
