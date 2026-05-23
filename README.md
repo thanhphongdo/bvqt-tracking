@@ -1,4 +1,4 @@
-# BVQT Tracking
+# BVQ7 Tracking
 
 Hospital patient flow tracking — bệnh viện Nguyễn Thị Thập.
 
@@ -13,7 +13,7 @@ Web app cho nhân viên y tế quét barcode trên sổ khám của bệnh nhân
 - **Vitest** + **@testing-library/react** for tests
 - Deployed on **Vercel Hobby** + **Firebase Spark** — $0/month
 
-See full design in [docs/superpowers/specs/2026-05-23-bvqt-tracking-design.md](docs/superpowers/specs/2026-05-23-bvqt-tracking-design.md).
+See full design in [docs/superpowers/specs/2026-05-23-bvq7-tracking-design.md](docs/superpowers/specs/2026-05-23-bvq7-tracking-design.md).
 
 ## Local development
 
@@ -70,7 +70,7 @@ pnpm test:watch     # watch mode
 1. Push to GitHub:
 
    ```bash
-   gh repo create bvqt-tracking --private --source=. --remote=origin --push
+   gh repo create bvq7-tracking --private --source=. --remote=origin --push
    ```
 
 2. https://vercel.com/new → import the repo. Framework auto-detected.

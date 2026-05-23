@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'BVQT Tracking',
-    short_name: 'BVQT',
+    name: 'BVQ7 Tracking',
+    short_name: 'BVQ7',
     description: 'Theo dõi luồng khám bệnh — bệnh viện Nguyễn Thị Thập',
     start_url: '/',
     display: 'standalone',

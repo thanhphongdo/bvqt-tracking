@@ -15,7 +15,7 @@ export const useSelectedRoom = create<SelectedRoomState>()(
       setRoomId: (id) => set({ roomId: id }),
     }),
     {
-      name: 'bvqt-selected-room',
+      name: 'bvq7-selected-room',
       storage: createJSONStorage(() => localStorage),
     }
   )

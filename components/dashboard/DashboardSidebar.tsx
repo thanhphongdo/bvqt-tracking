@@ -105,7 +105,7 @@ export function DashboardSidebar({ onNavItemClick, isMobile = false }: Dashboard
     <aside className="flex h-full w-full flex-col border-r border-border/60 bg-card p-4.5 shadow-xs transition-colors duration-200">
       {/* Sidebar Header with Brand Logo & ThemeToggle */}
       <div className="flex items-center justify-between mb-6 px-2.5">
-        <span className="font-bold text-sm tracking-tight text-primary dark:text-foreground">BVQT Tracking</span>
+        <span className="font-bold text-sm tracking-tight text-primary dark:text-foreground">BVQ7 Tracking</span>
         <ThemeToggle />
       </div>
 

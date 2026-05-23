@@ -301,7 +301,7 @@ async function generateBarcodesHtml(codes) {
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Sample barcodes (100 codes) — BVQT Tracking test</title>
+  <title>Sample barcodes (100 codes) — BVQ7 Tracking test</title>
   <style>
     body { font-family: -apple-system, system-ui, sans-serif; margin: 1rem; background: #f6f6f6; }
     h1 { font-size: 1.25rem; }

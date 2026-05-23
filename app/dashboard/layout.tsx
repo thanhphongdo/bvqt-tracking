@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             >
               {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
             </Button>
-            <span className="font-bold text-sm tracking-tight text-primary dark:text-foreground">BVQT Tracking</span>
+            <span className="font-bold text-sm tracking-tight text-primary dark:text-foreground">BVQ7 Tracking</span>
           </div>
           <div className="flex items-center gap-1">
             <ThemeToggle />

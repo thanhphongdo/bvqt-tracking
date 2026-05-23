@@ -17,13 +17,13 @@ const geistMono = Geist_Mono({
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-  title: "BVQT Tracking",
+  title: "BVQ7 Tracking",
   description: "Theo dõi luồng khám bệnh — bệnh viện Nguyễn Thị Thập",
-  applicationName: "BVQT Tracking",
+  applicationName: "BVQ7 Tracking",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "BVQT",
+    title: "BVQ7",
   },
 };
 

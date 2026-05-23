@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-6 p-6">
       <div className="flex flex-col items-center gap-1">
-        <h1 className="text-2xl font-semibold">BVQT Tracking</h1>
+        <h1 className="text-2xl font-semibold">BVQ7 Tracking</h1>
         <p className="text-sm text-muted-foreground">Theo dõi luồng khám bệnh</p>
       </div>
 

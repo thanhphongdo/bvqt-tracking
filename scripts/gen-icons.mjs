@@ -8,7 +8,7 @@ const svg = `<?xml version='1.0'?>
     <rect x='-15' y='-130' width='30' height='220' rx='8'/>
     <rect x='-125' y='-20' width='250' height='30' rx='8'/>
   </g>
-  <text x='256' y='420' font-family='sans-serif' font-size='80' font-weight='bold' fill='white' text-anchor='middle'>BVQT</text>
+  <text x='256' y='420' font-family='sans-serif' font-size='80' font-weight='bold' fill='white' text-anchor='middle'>BVQ7</text>
 </svg>`;
 
 const buf = Buffer.from(svg);
