@@ -43,7 +43,7 @@ export function RoomPicker({ open, onOpenChange, onSelect }: RoomPickerProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="flex flex-col max-h-[90dvh]">
         <DialogHeader>
           <DialogTitle>Chọn phòng</DialogTitle>
           <DialogDescription>
@@ -57,7 +57,7 @@ export function RoomPicker({ open, onOpenChange, onSelect }: RoomPickerProps) {
             Chưa có phòng nào active. Liên hệ manager để tạo phòng.
           </p>
         ) : (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 overflow-y-auto min-h-0 pr-1">
             {rooms.map((r) => (
               <Button
                 key={r.id}
