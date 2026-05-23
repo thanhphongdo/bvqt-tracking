@@ -11,15 +11,18 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-let app: FirebaseApp;
-let auth: Auth;
-let db: Firestore;
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
-export function getFirebaseClient() {
+export function getFirebaseClient(): { app: FirebaseApp; auth: Auth; db: Firestore } {
+  if (typeof window === 'undefined') {
+    throw new Error('getFirebaseClient() must only be called in the browser');
+  }
   if (!app) {
     app = getApps()[0] ?? initializeApp(firebaseConfig);
     auth = getAuth(app);
     db = getFirestore(app);
   }
-  return { app, auth, db };
+  return { app, auth: auth!, db: db! };
 }

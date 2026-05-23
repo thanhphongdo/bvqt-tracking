@@ -24,7 +24,6 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { auth } = getFirebaseClient();
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [role, setRole] = useState<UserRole | null>(null);
   const [displayName, setDisplayName] = useState<string | null>(null);
@@ -48,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
+    const { auth } = getFirebaseClient();
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       setUser(fbUser);
       if (fbUser) {
@@ -59,14 +59,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
     return unsub;
-  }, [auth]);
+  }, []);
 
   async function signInWithGoogle() {
+    const { auth } = getFirebaseClient();
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   }
 
   async function signOut() {
+    const { auth } = getFirebaseClient();
     await fbSignOut(auth);
   }
 
