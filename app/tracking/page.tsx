@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { LogOut, RefreshCw } from 'lucide-react';
 import type { RoomDocWithId } from '@/types/room';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 type Tab = 'scan' | 'history' | 'warnings';
 
@@ -51,82 +52,100 @@ export default function TrackingPage() {
   if (!isStaffPlus(role)) redirect('/not-authorized');
 
   return (
-    <main className="flex min-h-screen flex-1 flex-col">
-      <header className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-        <div className="flex items-center gap-2">
-          <h1 className="text-sm font-semibold">Tracking</h1>
-          {room ? (
-            <button
-              onClick={() => setPickerOpen(true)}
-              className="inline-flex items-center gap-1.5 cursor-pointer rounded-full bg-secondary hover:bg-secondary/80 px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-all duration-200 border-none"
-            >
-              <span>{room.name}</span>
-              <RefreshCw className="size-3 text-muted-foreground" />
-            </button>
-          ) : (
-            <Badge
-              variant="destructive"
-              className="cursor-pointer hover:bg-destructive/80 transition-colors"
-              onClick={() => setPickerOpen(true)}
-            >
-              Chưa chọn phòng
-            </Badge>
-          )}
-        </div>
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setPickerOpen(true)}
-            aria-label="Đổi phòng"
-          >
-            <RefreshCw className="size-4" />
-          </Button>
-          <Button variant="ghost" size="sm" onClick={signOut} aria-label="Đăng xuất">
-            <LogOut className="size-4" />
-          </Button>
-        </div>
-      </header>
-
-      <nav className="flex border-b bg-muted/20">
-        {(['scan', 'history', 'warnings'] as const).map((t) => (
-          <button
-            key={t}
-            type="button"
-            onClick={() => setTab(t)}
-            className={`flex-1 py-2 text-xs ${tab === t ? 'border-b-2 border-foreground font-medium' : 'text-muted-foreground'}`}
-          >
-            {t === 'scan' ? 'Quét' : t === 'history' ? 'Lịch sử (7 ngày)' : 'Cảnh báo'}
-          </button>
-        ))}
-      </nav>
-
-      <div className="flex flex-1 flex-col items-center justify-start p-4">
-        {tab === 'scan' && (
-          room ? (
-            <ScanFlow room={room} onChangeRoom={() => setPickerOpen(true)} />
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-4 py-16 text-center animate-in fade-in duration-300">
-              <div className="rounded-full bg-muted p-4">
-                <RefreshCw className="size-8 text-muted-foreground" />
-              </div>
-              <div className="flex flex-col gap-1 max-w-[280px]">
-                <p className="font-semibold text-base">Chưa cấu hình phòng trực</p>
-                <p className="text-xs text-muted-foreground">Vui lòng chọn phòng làm việc hiện tại để bắt đầu quét barcode bệnh nhân.</p>
-              </div>
-              <Button onClick={() => setPickerOpen(true)} className="rounded-lg shadow-sm font-semibold mt-2">
-                Chọn phòng trực
+    <main className="flex min-h-screen flex-col bg-background">
+      <Tabs
+        value={tab}
+        onValueChange={(v) => setTab(v as Tab)}
+        className="flex flex-col flex-1 gap-0"
+      >
+        {/* Unified Sticky Header */}
+        <div className="sticky top-0 z-40 w-full bg-background/95 backdrop-blur-md border-b border-border/40">
+          <header className="flex items-center justify-between border-b border-border/40 bg-muted/40 px-4 py-2">
+            <div className="flex items-center gap-2">
+              <h1 className="text-sm font-semibold tracking-tight text-primary dark:text-foreground">Tracking</h1>
+              {room ? (
+                <button
+                  type="button"
+                  onClick={() => setPickerOpen(true)}
+                  className="inline-flex items-center gap-1.5 cursor-pointer rounded-full bg-secondary hover:bg-secondary/80 px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-all duration-200 border-none"
+                >
+                  <span>{room.name}</span>
+                  <RefreshCw className="size-3 text-muted-foreground" />
+                </button>
+              ) : (
+                <Badge
+                  variant="destructive"
+                  className="cursor-pointer hover:bg-destructive/80 transition-colors"
+                  onClick={() => setPickerOpen(true)}
+                >
+                  Chưa chọn phòng
+                </Badge>
+              )}
+            </div>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setPickerOpen(true)}
+                aria-label="Đổi phòng"
+              >
+                <RefreshCw className="size-4" />
+              </Button>
+              <Button variant="ghost" size="sm" onClick={signOut} aria-label="Đăng xuất">
+                <LogOut className="size-4" />
               </Button>
             </div>
-          )
-        )}
-        {tab === 'history' && <StaffHistoryTab />}
-        {tab === 'warnings' && <WarningsTab />}
-      </div>
+          </header>
 
-      <p className="border-t px-4 py-2 text-center text-xs text-muted-foreground">
+          <div className="px-4 py-1.5 flex justify-center bg-muted/10">
+            <TabsList className="w-full max-w-lg h-9 bg-muted/50 p-1" variant="default">
+              <TabsTrigger value="scan" className="text-xs">
+                Quét
+              </TabsTrigger>
+              <TabsTrigger value="history" className="text-xs">
+                Lịch sử (7 ngày)
+              </TabsTrigger>
+              <TabsTrigger value="warnings" className="text-xs">
+                Cảnh báo
+              </TabsTrigger>
+            </TabsList>
+          </div>
+        </div>
+
+        {/* Tab Content Wrapper */}
+        <div className="flex-1 w-full max-w-lg mx-auto flex flex-col p-4">
+          <TabsContent value="scan" className="w-full flex-1 flex flex-col focus-visible:outline-none">
+            {room ? (
+              <ScanFlow room={room} onChangeRoom={() => setPickerOpen(true)} />
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-4 py-16 text-center animate-in fade-in duration-300">
+                <div className="rounded-full bg-muted p-4">
+                  <RefreshCw className="size-8 text-muted-foreground" />
+                </div>
+                <div className="flex flex-col gap-1 max-w-[280px]">
+                  <p className="font-semibold text-base">Chưa cấu hình phòng trực</p>
+                  <p className="text-xs text-muted-foreground">Vui lòng chọn phòng làm việc hiện tại để bắt đầu quét barcode bệnh nhân.</p>
+                </div>
+                <Button onClick={() => setPickerOpen(true)} className="rounded-lg shadow-sm font-semibold mt-2">
+                  Chọn phòng trực
+                </Button>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="history" className="w-full focus-visible:outline-none">
+            <StaffHistoryTab />
+          </TabsContent>
+
+          <TabsContent value="warnings" className="w-full focus-visible:outline-none">
+            <WarningsTab />
+          </TabsContent>
+        </div>
+      </Tabs>
+
+      <footer className="border-t px-4 py-2 text-center text-xs text-muted-foreground bg-muted/10 shrink-0">
         {displayName} ({role})
-      </p>
+      </footer>
 
       <RoomPicker
         open={pickerOpen}

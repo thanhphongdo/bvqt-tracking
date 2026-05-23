@@ -31,17 +31,21 @@ export default function RoomsPage() {
   if (loading) return <p className="text-sm text-muted-foreground">Đang tải...</p>;
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Phòng</h1>
-        <RoomDialog trigger={<Button>Tạo phòng</Button>} />
+    <div className="px-4 pb-4 md:px-6 md:pb-6 flex flex-col h-full overflow-hidden gap-4 pt-4 md:pt-6">
+      {/* Top Header Section (Stationary) */}
+      <div className="flex items-center justify-between shrink-0">
+        <h1 className="text-2xl font-semibold tracking-tight">Phòng</h1>
+        <RoomDialog trigger={<Button className="rounded-xl h-9 font-medium px-4">Tạo phòng</Button>} />
       </div>
 
-      {roomsLoading ? (
-        <p className="text-sm text-muted-foreground">Đang tải danh sách...</p>
-      ) : (
-        <RoomsTable rooms={rooms} />
-      )}
+      {/* Scrollable Table Area */}
+      <div className="flex-1 overflow-auto min-h-0 border border-border/60 rounded-xl bg-card shadow-xs relative">
+        {roomsLoading ? (
+          <p className="text-sm text-muted-foreground animate-pulse p-4">Đang tải danh sách...</p>
+        ) : (
+          <RoomsTable rooms={rooms} />
+        )}
+      </div>
     </div>
   );
 }

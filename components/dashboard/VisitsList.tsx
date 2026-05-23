@@ -36,13 +36,15 @@ function totalMinutes(v: VisitDocWithId): string {
   const start = v.registeredAt.toMillis();
   const end = v.lastEventAt.toMillis();
   const m = Math.round((end - start) / 60_000);
-  if (m < 60) return `${m}p`;
-  return `${Math.floor(m / 60)}g${m % 60}p`;
+  if (m < 60) return `${m} phút`;
+  return `${Math.floor(m / 60)} giờ ${m % 60} phút`;
 }
 
 export function VisitsList({ visits }: { visits: VisitDocWithId[] }) {
   const [roomMap, setRoomMap] = useState<Map<string, string>>(new Map());
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: 'registeredAt', desc: true }
+  ]);
 
   useEffect(() => {
     const { db } = getFirebaseClient();

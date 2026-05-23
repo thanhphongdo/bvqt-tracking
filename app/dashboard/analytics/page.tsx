@@ -53,70 +53,75 @@ export default function AnalyticsPage() {
   const regToFirst = computeRegistrationToFirstRoom(events, visits);
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Thống kê</h1>
+    <div className="px-4 pb-4 md:px-6 md:pb-6 flex flex-col gap-6">
+      {/* Sticky Header & Filters */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-md pb-4 border-b border-border/40 -mx-4 px-4 md:-mx-6 md:px-6 pt-4 md:pt-6 space-y-4">
+        <h1 className="text-2xl font-semibold tracking-tight">Thống kê</h1>
 
-      <div className="flex flex-wrap items-end gap-3 rounded-lg border bg-muted/30 p-3">
-        <DateRangeFilter
-          from={state.from}
-          to={state.to}
-          onChange={(r) => setState({ from: r.from, to: r.to })}
-        />
-        <p className="text-xs text-muted-foreground">Tối đa khuyến nghị: 60 ngày</p>
+        <div className="flex flex-wrap items-end gap-3 rounded-xl border bg-card/50 p-3 shadow-xs">
+          <DateRangeFilter
+            from={state.from}
+            to={state.to}
+            onChange={(r) => setState({ from: r.from, to: r.to })}
+          />
+          <p className="text-xs text-muted-foreground self-center pt-0 md:pt-12">Tối đa khuyến nghị: 60 ngày</p>
+        </div>
       </div>
 
-      {error && (
-        <Card className="border-destructive bg-destructive/10 p-4 text-sm text-destructive font-medium">
-          Lỗi tải dữ liệu thống kê: {error}
-        </Card>
-      )}
+      <div className="space-y-6 pt-2">
+        {error && (
+          <Card className="border-destructive bg-destructive/10 p-4 text-sm text-destructive font-medium rounded-xl">
+            Lỗi tải dữ liệu thống kê: {error}
+          </Card>
+        )}
 
-      {loading ? (
-        <p className="text-sm text-muted-foreground">Đang tải...</p>
-      ) : (
-        <>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            <KpiCard
-              title="Bệnh nhân"
-              value={String(visits.length)}
-              subtitle={`${visits.filter((v) => v.hasError).length} có lỗi`}
-            />
-            <KpiCard
-              title="Trung bình tổng thời gian mỗi lượt"
-              value={`${Math.round(avg(visitDurations))} phút`}
-              subtitle={visitDurations.length === 0 ? 'n/a' : `${visitDurations.length} lượt`}
-            />
-            <KpiCard
-              title="Trung bình thời gian chờ từ đăng ký đến phòng đầu tiên"
-              value={`${Math.round(avg(regToFirst))} phút`}
-              subtitle={`${regToFirst.length} lượt`}
-            />
-            <KpiCard
-              title="Số phòng"
-              value={String(roomDurations.length)}
-              subtitle="có dữ liệu trong khoảng"
-            />
-          </div>
-
-          <Card className="p-4">
-            <h2 className="mb-2 text-sm font-semibold">Phân bổ thời gian khám theo phòng</h2>
-            <div className="grid gap-4 md:grid-cols-2">
-              <RoomDurationPie data={roomDurations} />
-              <RoomDurationBar data={roomDurations} />
+        {loading ? (
+          <p className="text-sm text-muted-foreground animate-pulse">Đang tải dữ liệu thống kê...</p>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              <KpiCard
+                title="Bệnh nhân"
+                value={String(visits.length)}
+                subtitle={`${visits.filter((v) => v.hasError).length} có lỗi`}
+              />
+              <KpiCard
+                title="Trung bình tổng thời gian mỗi lượt"
+                value={`${Math.round(avg(visitDurations))} phút`}
+                subtitle={visitDurations.length === 0 ? 'n/a' : `${visitDurations.length} lượt`}
+              />
+              <KpiCard
+                title="Trung bình thời gian chờ từ đăng ký đến phòng đầu tiên"
+                value={`${Math.round(avg(regToFirst))} phút`}
+                subtitle={`${regToFirst.length} lượt`}
+              />
+              <KpiCard
+                title="Số phòng"
+                value={String(roomDurations.length)}
+                subtitle="có dữ liệu trong khoảng"
+              />
             </div>
-          </Card>
 
-          <Card className="p-4">
-            <h2 className="mb-2 text-sm font-semibold">Bệnh nhân theo giờ trong ngày</h2>
-            <HourlyHistogram data={hourly} />
-          </Card>
+            <Card className="p-4 rounded-xl">
+              <h2 className="mb-2 text-sm font-semibold">Phân bổ thời gian khám theo phòng</h2>
+              <div className="grid gap-4 md:grid-cols-2">
+                <RoomDurationPie data={roomDurations} />
+                <RoomDurationBar data={roomDurations} />
+              </div>
+            </Card>
 
-          <Card className="p-4">
-            <h2 className="mb-2 text-sm font-semibold">Thời gian chờ trung bình giữa các phòng</h2>
-            <TransitionsHeatmap data={transitions} />
-          </Card>
-        </>
-      )}
+            <Card className="p-4 rounded-xl">
+              <h2 className="mb-2 text-sm font-semibold">Bệnh nhân theo giờ trong ngày</h2>
+              <HourlyHistogram data={hourly} />
+            </Card>
+
+            <Card className="p-4 rounded-xl">
+              <h2 className="mb-2 text-sm font-semibold">Thời gian chờ trung bình giữa các phòng</h2>
+              <TransitionsHeatmap data={transitions} />
+            </Card>
+          </>
+        )}
+      </div>
     </div>
   );
 }

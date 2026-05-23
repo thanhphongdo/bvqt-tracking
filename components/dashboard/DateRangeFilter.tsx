@@ -1,7 +1,7 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { DatePicker } from '@/components/ui/date-picker';
 
 interface Props {
   from: string;
@@ -11,23 +11,19 @@ interface Props {
 
 export function DateRangeFilter({ from, to, onChange }: Props) {
   return (
-    <div className="flex flex-wrap items-end gap-2">
-      <div className="grid gap-1">
-        <Label htmlFor="from">Từ</Label>
-        <Input
-          id="from"
-          type="date"
+    <div className="flex flex-row items-end gap-2 w-full sm:w-auto">
+      <div className="grid gap-1.5 flex-1 min-w-0">
+        <Label className="text-xs font-semibold text-muted-foreground pl-0.5">Từ ngày</Label>
+        <DatePicker
           value={from}
-          onChange={(e) => onChange({ from: e.target.value, to })}
+          onChange={(val) => onChange({ from: val, to })}
         />
       </div>
-      <div className="grid gap-1">
-        <Label htmlFor="to">Đến</Label>
-        <Input
-          id="to"
-          type="date"
+      <div className="grid gap-1.5 flex-1 min-w-0">
+        <Label className="text-xs font-semibold text-muted-foreground pl-0.5">Đến ngày</Label>
+        <DatePicker
           value={to}
-          onChange={(e) => onChange({ from, to: e.target.value })}
+          onChange={(val) => onChange({ from, to: val })}
         />
       </div>
     </div>

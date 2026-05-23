@@ -51,9 +51,6 @@ export function defaultDateRange(): { from: string; to: string } {
     day: '2-digit',
   });
   const now = new Date();
-  const to = fmt.format(now);
-  const fromDate = new Date(now);
-  fromDate.setDate(fromDate.getDate() - 6);
-  const from = fmt.format(fromDate);
-  return { from, to };
+  const today = fmt.format(now);
+  return { from: today, to: today };
 }
