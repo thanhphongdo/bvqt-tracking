@@ -39,6 +39,8 @@ yarn-error.log*
 
 # Firebase
 serviceAccountKey.json
+*-firebase-adminsdk*.json
+bvq7-tracking-firebase.json
 .firebase/
 firebase-debug.log
 

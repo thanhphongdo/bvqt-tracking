@@ -21,7 +21,23 @@ service cloud.firestore {
       }
     }
 
-    // Plan 2 will add /visits + events rules
+    match /visits/{visitId} {
+      allow read: if isStaffPlus();
+      allow create, update: if isStaffPlus();
+      allow delete: if isAdmin();
+
+      match /events/{eventId} {
+        allow read: if isStaffPlus();
+        allow create: if isStaffPlus();
+        // Staff can edit only their own events within 36h (today + yesterday).
+        // Managers and admins can edit anytime.
+        allow update: if isManagerPlus()
+          || (isStaffPlus()
+              && resource.data.staffUid == request.auth.uid
+              && resource.data.timestamp.toMillis() > request.time.toMillis() - 36 * 60 * 60 * 1000);
+        allow delete: if isAdmin();
+      }
+    }
 
     match /auditLog/{id} {
       allow read: if isAdmin();
