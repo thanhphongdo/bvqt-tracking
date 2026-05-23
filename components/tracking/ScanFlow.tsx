@@ -10,13 +10,15 @@ import { writeScan } from '@/lib/tracking/write-scan';
 import { getFirebaseClient } from '@/lib/firebase/client';
 import { useAuth } from '@/lib/firebase/auth-context';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import type { RoomDocWithId } from '@/types/room';
 
 interface Props {
   room: RoomDocWithId;
+  onChangeRoom?: () => void;
 }
 
-export function ScanFlow({ room }: Props) {
+export function ScanFlow({ room, onChangeRoom }: Props) {
   const { user } = useAuth();
   const [scannedCode, setScannedCode] = useState<string | null>(null);
   const [selectedAction, setSelectedAction] = useState<ScanAction | null>(null);
@@ -98,7 +100,25 @@ export function ScanFlow({ room }: Props) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 w-full max-w-sm">
+      {/* Current Room Info Card */}
+      <div className="flex w-full items-center justify-between rounded-xl border bg-card/50 p-3 shadow-xs backdrop-blur-xs">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">Phòng đang trực</span>
+          <span className="text-sm font-semibold text-foreground">{room.name}</span>
+        </div>
+        {onChangeRoom && (
+          <Button
+            variant="outline"
+            size="xs"
+            onClick={onChangeRoom}
+            className="h-7 text-xs font-semibold px-2.5 rounded-lg border-muted-foreground/20 hover:bg-muted"
+          >
+            Đổi phòng
+          </Button>
+        )}
+      </div>
+
       <BarcodeScanner onScan={handleScan} paused={scannedCode !== null} />
       {scannedCode && inference && selectedAction && (
         <ScanResultCard

@@ -80,6 +80,7 @@ export function BarcodeScanner({ onScan, paused }: BarcodeScannerProps) {
             (result) => {
               if (result && isActive) {
                 onScan(result.getText());
+                setStarted(false); // Turn off camera immediately on success
               }
             }
           );
@@ -92,6 +93,7 @@ export function BarcodeScanner({ onScan, paused }: BarcodeScannerProps) {
             (result) => {
               if (result && isActive) {
                 onScan(result.getText());
+                setStarted(false); // Turn off camera immediately on success
               }
             }
           );

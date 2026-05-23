@@ -56,9 +56,21 @@ export default function TrackingPage() {
         <div className="flex items-center gap-2">
           <h1 className="text-sm font-semibold">Tracking</h1>
           {room ? (
-            <Badge variant="secondary">{room.name}</Badge>
+            <button
+              onClick={() => setPickerOpen(true)}
+              className="inline-flex items-center gap-1.5 cursor-pointer rounded-full bg-secondary hover:bg-secondary/80 px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-all duration-200 border-none"
+            >
+              <span>{room.name}</span>
+              <RefreshCw className="size-3 text-muted-foreground" />
+            </button>
           ) : (
-            <Badge variant="destructive">Chưa chọn phòng</Badge>
+            <Badge
+              variant="destructive"
+              className="cursor-pointer hover:bg-destructive/80 transition-colors"
+              onClick={() => setPickerOpen(true)}
+            >
+              Chưa chọn phòng
+            </Badge>
           )}
         </div>
         <div className="flex items-center gap-1">
@@ -92,9 +104,20 @@ export default function TrackingPage() {
       <div className="flex flex-1 flex-col items-center justify-start p-4">
         {tab === 'scan' && (
           room ? (
-            <ScanFlow room={room} />
+            <ScanFlow room={room} onChangeRoom={() => setPickerOpen(true)} />
           ) : (
-            <p className="text-sm text-muted-foreground">Chọn phòng để bắt đầu quét.</p>
+            <div className="flex flex-col items-center justify-center gap-4 py-16 text-center animate-in fade-in duration-300">
+              <div className="rounded-full bg-muted p-4">
+                <RefreshCw className="size-8 text-muted-foreground" />
+              </div>
+              <div className="flex flex-col gap-1 max-w-[280px]">
+                <p className="font-semibold text-base">Chưa cấu hình phòng trực</p>
+                <p className="text-xs text-muted-foreground">Vui lòng chọn phòng làm việc hiện tại để bắt đầu quét barcode bệnh nhân.</p>
+              </div>
+              <Button onClick={() => setPickerOpen(true)} className="rounded-lg shadow-sm font-semibold mt-2">
+                Chọn phòng trực
+              </Button>
+            </div>
           )
         )}
         {tab === 'history' && <StaffHistoryTab />}

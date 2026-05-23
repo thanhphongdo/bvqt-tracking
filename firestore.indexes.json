@@ -21,6 +21,23 @@
       "collectionGroup": "visits",
       "queryScope": "COLLECTION",
       "fields": [
+        { "fieldPath": "date", "order": "DESCENDING" },
+        { "fieldPath": "lastEventAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "visits",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "hasError", "order": "ASCENDING" },
+        { "fieldPath": "date", "order": "DESCENDING" },
+        { "fieldPath": "lastEventAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "visits",
+      "queryScope": "COLLECTION",
+      "fields": [
         { "fieldPath": "currentRoomId", "order": "ASCENDING" },
         { "fieldPath": "currentRoomInAt", "order": "ASCENDING" }
       ]
