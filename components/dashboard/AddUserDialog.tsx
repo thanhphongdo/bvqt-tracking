@@ -95,12 +95,16 @@ export function AddUserDialog() {
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
-                        <SelectValue />
+                        <SelectValue>
+                          {(v: string | null) =>
+                            ({ staff: 'Nhân viên', manager: 'Quản lý', admin: 'Quản trị' }[v ?? ''] ?? v ?? 'Chọn role')
+                          }
+                        </SelectValue>
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="staff">Staff (nhân viên y tế)</SelectItem>
-                        <SelectItem value="manager">Manager</SelectItem>
-                        <SelectItem value="admin">Admin</SelectItem>
+                        <SelectItem value="staff">Nhân viên</SelectItem>
+                        <SelectItem value="manager">Quản lý</SelectItem>
+                        <SelectItem value="admin">Quản trị</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>

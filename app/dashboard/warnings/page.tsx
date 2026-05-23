@@ -35,11 +35,11 @@ export default function WarningsDashboardPage() {
     <Tabs defaultValue="open" className="flex flex-col flex-1 overflow-hidden gap-4 px-4 pb-4 md:px-6 md:pb-6 pt-4 md:pt-6">
       <div className="space-y-4 shrink-0">
         <h1 className="text-2xl font-semibold tracking-tight">Cảnh báo & Lỗi</h1>
-        <TabsList variant="line" className="w-full border-b border-border/40 rounded-none h-auto pb-0 justify-start gap-0">
-          <TabsTrigger value="open" className="rounded-none px-4 py-2 text-sm">
+        <TabsList className="w-full h-9">
+          <TabsTrigger value="open" className="text-xs flex-1">
             Cảnh báo đang mở ({warnings.length})
           </TabsTrigger>
-          <TabsTrigger value="errors" className="rounded-none px-4 py-2 text-sm">
+          <TabsTrigger value="errors" className="text-xs flex-1">
             Dữ liệu lỗi
           </TabsTrigger>
         </TabsList>

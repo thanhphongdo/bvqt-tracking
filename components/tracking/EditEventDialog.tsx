@@ -121,7 +121,11 @@ export function EditEventDialog({ event, open, onClose }: Props) {
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger>
-                        <SelectValue />
+                        <SelectValue>
+                          {(v: string | null) =>
+                            ({ registered: 'Đăng ký', room_in: 'Vào phòng', room_out: 'Ra phòng' }[v ?? ''] ?? v ?? 'Chọn loại')
+                          }
+                        </SelectValue>
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="registered">Đăng ký</SelectItem>

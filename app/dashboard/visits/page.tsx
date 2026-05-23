@@ -74,7 +74,11 @@ export default function VisitsPage() {
               <Label htmlFor="hasError" className="text-xs font-semibold text-muted-foreground pl-1">Trạng thái</Label>
               <Select value={state.hasError} onValueChange={(v) => setState({ hasError: v ?? undefined })}>
                 <SelectTrigger id="hasError" className="w-full sm:w-32 rounded-xl h-9">
-                  <SelectValue />
+                  <SelectValue>
+                    {(v: string | null) =>
+                      ({ all: 'Tất cả', false: 'Bình thường', true: 'Có lỗi' }[v ?? ''] ?? v ?? 'Tất cả')
+                    }
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tất cả</SelectItem>
