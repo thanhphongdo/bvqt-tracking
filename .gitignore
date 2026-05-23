@@ -44,6 +44,9 @@ bvq7-tracking-firebase.json
 .firebase/
 firebase-debug.log
 
+# Generated test artifacts
+sample-barcodes.html
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
